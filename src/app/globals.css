@@ -1,26 +1,230 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── Matter ─────────────────────────────────────────── */
+@font-face {
+  font-family: "Matter";
+  src: url("/fonts/matter/Matter-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Matter";
+  src: url("/fonts/matter/Matter-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Matter";
+  src: url("/fonts/matter/Matter-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Matter";
+  src: url("/fonts/matter/Matter-RegularItalic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Matter";
+  src: url("/fonts/matter/Matter-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Matter";
+  src: url("/fonts/matter/Matter-MediumItalic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Matter";
+  src: url("/fonts/matter/Matter-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Matter";
+  src: url("/fonts/matter/Matter-SemiBoldItalic.ttf") format("truetype");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Matter";
+  src: url("/fonts/matter/Matter-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Matter";
+  src: url("/fonts/matter/Matter-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Matter";
+  src: url("/fonts/matter/Matter-Heavy.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Matter";
+  src: url("/fonts/matter/Matter-HeavyItalic.ttf") format("truetype");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
 }
 
+/* ── Season Sans ─────────────────────────────────────── */
+@font-face {
+  font-family: "SeasonSans";
+  src: url("/fonts/season/SeasonSans-TRIAL-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonSans";
+  src: url("/fonts/season/SeasonSans-TRIAL-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonSans";
+  src: url("/fonts/season/SeasonSans-TRIAL-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonSans";
+  src: url("/fonts/season/SeasonSans-TRIAL-RegularItalic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonSans";
+  src: url("/fonts/season/SeasonSans-TRIAL-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonSans";
+  src: url("/fonts/season/SeasonSans-TRIAL-MediumItalic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonSans";
+  src: url("/fonts/season/SeasonSans-TRIAL-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonSans";
+  src: url("/fonts/season/SeasonSans-TRIAL-SemiBoldItalic.ttf") format("truetype");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonSans";
+  src: url("/fonts/season/SeasonSans-TRIAL-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonSans";
+  src: url("/fonts/season/SeasonSans-TRIAL-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonSans";
+  src: url("/fonts/season/SeasonSans-TRIAL-Heavy.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonSans";
+  src: url("/fonts/season/SeasonSans-TRIAL-HeavyItalic.ttf") format("truetype");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ── CSS Variables ───────────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "Matter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "SeasonSans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Colors */
+  --color-0: #ffffff;
+  --color-1: #fafafa;
+  --color-2: #f5f5f5;
+  --color-divider: #f0f0f0;
+
+  /* Text */
+  --color-text-primary: #141414;
+  --color-text-secondary: #666666;
+  --color-text-tertiary: #999999;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ── Text Styles (Matter Regular) ───────────────────── */
+@layer utilities {
+  .text-body-12 {
+    font-family: "Matter", ui-sans-serif, sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+  }
+
+  .text-body-14 {
+    font-family: "Matter", ui-sans-serif, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+
+  .text-body-16 {
+    font-family: "Matter", ui-sans-serif, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
   }
 }
 
+/* ── Base ────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
