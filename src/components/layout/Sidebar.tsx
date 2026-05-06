@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { PlatformIcon, type IconName } from "@/components/ui/PlatformIcon"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -78,7 +80,7 @@ function NavItem({
       ].join(" ")}
     >
       <PlatformIcon name={item.icon} className="shrink-0 overflow-clip relative size-4" />
-      <span className="text-body-14 whitespace-nowrap">{item.label}</span>
+      <span className="text-body-14 leading-none whitespace-nowrap">{item.label}</span>
     </button>
   )
 }
@@ -98,7 +100,7 @@ function NavSection({
 }) {
   return (
     <div className="flex flex-col items-start w-full">
-      <div className="flex items-center w-full px-3 py-1">
+      <div className="flex items-center w-full px-3 py-1 mb-[4px]">
         <span className="flex-1 text-body-14 text-[var(--color-text-tertiary)] whitespace-nowrap">
           {section.title}
         </span>
@@ -152,6 +154,7 @@ function UserAvatar() {
 export function Sidebar() {
   const [activeItem, setActiveItem] = useState("text-to-speech")
   const [developersOpen, setDevelopersOpen] = useState(true)
+  const pathname = usePathname()
 
   return (
     <aside
@@ -161,17 +164,7 @@ export function Sidebar() {
       {/* Header */}
       <div className="flex items-center justify-between pl-3 pr-3 py-4 shrink-0">
         <div className="h-[26px] flex items-center">
-          <span
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "18px",
-              letterSpacing: "-0.02em",
-              color: "var(--color-text-primary)",
-            }}
-          >
-            sarvam
-          </span>
+          <img src="/SarvamLogo.png" alt="Sarvam" className="pl-[12px] h-[12px] w-auto" />
         </div>
         <button className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors">
           <PlatformIcon name="Sidebar" className="overflow-clip relative size-4" />
@@ -213,6 +206,18 @@ export function Sidebar() {
             active={activeItem === "documentation"}
             onClick={() => setActiveItem("documentation")}
           />
+          <Link
+            href="/design-system"
+            className={[
+              "flex w-full items-center gap-2 px-3 py-2 rounded-[50px] transition-colors",
+              pathname === "/design-system"
+                ? "bg-[var(--color-2)] text-[var(--color-text-primary)]"
+                : "text-[var(--color-text-secondary)] hover:bg-[var(--color-2)]",
+            ].join(" ")}
+          >
+            <PlatformIcon name="Sidebar" className="shrink-0 overflow-clip relative size-4" />
+            <span className="text-body-14 leading-none whitespace-nowrap">Design System</span>
+          </Link>
           <button className="flex items-center w-full rounded-[50px] hover:bg-[var(--color-2)] transition-colors">
             <UserAvatar />
             <span className="text-body-14 text-[var(--color-text-secondary)] whitespace-nowrap">

@@ -13,7 +13,7 @@ export default function Home() {
           subtitle="Convert text to natural speech in Indian languages"
         />
         <main className="flex flex-1 overflow-hidden min-h-0">
-          <div className="flex-1 overflow-auto">
+          <div className="flex-1 min-w-0 overflow-auto">
             <TextToSpeechApp />
           </div>
           <L2Panel />

@@ -191,6 +191,14 @@
 
 /* ── Text Styles (Matter Regular) ───────────────────── */
 @layer utilities {
+  .text-display-20 {
+    font-family: "SeasonSans", ui-sans-serif, sans-serif;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
   .text-body-12 {
     font-family: "Matter", ui-sans-serif, sans-serif;
     font-size: 12px;

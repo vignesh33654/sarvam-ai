@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "dialkit/styles.css";
+import { DialRoot } from "dialkit";
+import DevAgentation from "@/components/DevAgentation";
 
 export const metadata: Metadata = {
   title: "Sarvam AI",
@@ -11,7 +14,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <DialRoot />
+        <DevAgentation />
+      </body>
     </html>
   );
 }

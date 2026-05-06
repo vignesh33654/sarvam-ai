@@ -10,7 +10,7 @@ function CodeBracketsIcon() {
 export function TopBar({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <header className="flex items-center justify-between px-4 py-4 bg-white border-b border-[var(--color-divider)] shrink-0">
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-[4px]">
         <span className="text-display-20 text-[var(--color-text-primary)]">
           {title}
         </span>
