@@ -7,7 +7,15 @@ function CodeBracketsIcon() {
   )
 }
 
-export function TopBar({ title, subtitle }: { title: string; subtitle: string }) {
+export function TopBar({
+  title,
+  subtitle,
+  credits,
+}: {
+  title: string
+  subtitle: string
+  credits?: number
+}) {
   return (
     <header className="flex items-center justify-between px-4 py-4 bg-white border-b border-[var(--color-divider)] shrink-0">
       <div className="flex flex-col gap-[4px]">
@@ -18,6 +26,11 @@ export function TopBar({ title, subtitle }: { title: string; subtitle: string })
       </div>
 
       <div className="flex items-center gap-[10px]">
+        {credits !== undefined && (
+          <div className="flex items-center justify-center h-10 px-[16px] text-body-14 text-[var(--color-text-primary)] border border-[var(--color-divider)] rounded-full bg-white whitespace-nowrap">
+            {credits} credits left
+          </div>
+        )}
         <button className="flex items-center justify-center h-10 px-[16px] text-body-14 text-[var(--color-text-primary)] border border-[var(--color-divider)] rounded-full bg-white hover:bg-[var(--color-2)] transition-colors whitespace-nowrap">
           Feedback
         </button>

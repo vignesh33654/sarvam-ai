@@ -1,10 +1,8 @@
 import { Sidebar } from "@/components/layout/Sidebar"
 import { TopBar } from "@/components/layout/TopBar"
-import { TextToSpeechApp } from "@/apps/text-to-speech"
-import { L2Panel } from "@/apps/text-to-speech/components/L2Panel"
-import { MusicPlayer } from "@/apps/text-to-speech/components/MusicPlayer"
+import { FirstTimeScreen } from "@/apps/text-to-speech/components/FirstTimeScreen"
 
-export default function Home() {
+export default function OnboardingPage() {
   return (
     <div className="flex h-screen bg-white text-[var(--color-text-primary)]">
       <Sidebar />
@@ -16,11 +14,9 @@ export default function Home() {
         />
         <main className="flex flex-1 overflow-hidden min-h-0">
           <div className="flex-1 min-w-0 overflow-auto">
-            <TextToSpeechApp />
+            <FirstTimeScreen />
           </div>
-          <L2Panel />
         </main>
-        <MusicPlayer />
       </div>
     </div>
   )

@@ -11,6 +11,7 @@ type NavItemDef = {
   id: string
   label: string
   icon: IconName
+  href: string
 }
 
 type SectionDef = {
@@ -22,26 +23,26 @@ type SectionDef = {
 
 // ── Nav data ──────────────────────────────────────────────────────────────────
 
-const HOME_ITEM: NavItemDef = { id: "home", label: "Home", icon: "Home" }
+const HOME_ITEM: NavItemDef = { id: "home", label: "Home", icon: "Home", href: "/" }
 
 const SECTIONS: SectionDef[] = [
   {
     id: "playground",
     title: "Playground",
     items: [
-      { id: "text-to-speech",        label: "Text to Speech",        icon: "TextToSpeech" },
-      { id: "vision",                label: "Vision",                icon: "Vision" },
-      { id: "speech-to-text",        label: "Speech to Text",        icon: "Speech" },
-      { id: "chat",                  label: "Chat",                  icon: "Chats" },
-      { id: "translate",             label: "Translate",             icon: "Translate" },
+      { id: "text-to-speech",        label: "Text to Speech",        icon: "TextToSpeech", href: "/" },
+      { id: "vision",                label: "Vision",                icon: "Vision",        href: "/vision" },
+      { id: "speech-to-text",        label: "Speech to Text",        icon: "Speech",        href: "/speech-to-text" },
+      { id: "chat",                  label: "Chat",                  icon: "Chats",         href: "/chat" },
+      { id: "translate",             label: "Translate",             icon: "Translate",     href: "/translate" },
     ],
   },
   {
     id: "products",
     title: "Products",
     items: [
-      { id: "conversational-agents", label: "Conversational Agents", icon: "Conversions" },
-      { id: "video-dubbing",         label: "Video Dubbing",         icon: "Video" },
+      { id: "conversational-agents", label: "Conversational Agents", icon: "Conversions", href: "/conversational-agents" },
+      { id: "video-dubbing",         label: "Video Dubbing",         icon: "Video",        href: "/video-dubbing" },
     ],
   },
   {
@@ -49,29 +50,21 @@ const SECTIONS: SectionDef[] = [
     title: "Developers",
     collapsible: true,
     items: [
-      { id: "api-keys", label: "API Keys", icon: "Key" },
-      { id: "usage",    label: "Usage",    icon: "Usage" },
-      { id: "limits",   label: "Limits",   icon: "Limits" },
-      { id: "billing",  label: "Billing",  icon: "Billings" },
-      { id: "pricing",  label: "Pricing",  icon: "Pricing" },
+      { id: "api-keys", label: "API Keys", icon: "Key",      href: "/api-keys" },
+      { id: "usage",    label: "Usage",    icon: "Usage",    href: "/usage" },
+      { id: "limits",   label: "Limits",   icon: "Limits",   href: "/limits" },
+      { id: "billing",  label: "Billing",  icon: "Billings", href: "/billing" },
+      { id: "pricing",  label: "Pricing",  icon: "Pricing",  href: "/pricing" },
     ],
   },
 ]
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
-function NavItem({
-  item,
-  active,
-  onClick,
-}: {
-  item: NavItemDef
-  active: boolean
-  onClick: () => void
-}) {
+function NavItem({ item, active }: { item: NavItemDef; active: boolean }) {
   return (
-    <button
-      onClick={onClick}
+    <Link
+      href={item.href}
       className={[
         "flex w-full items-center gap-2 px-3 py-2 rounded-[50px] transition-colors",
         active
@@ -81,20 +74,18 @@ function NavItem({
     >
       <PlatformIcon name={item.icon} className="shrink-0 overflow-clip relative size-4" />
       <span className="text-body-14 leading-none whitespace-nowrap">{item.label}</span>
-    </button>
+    </Link>
   )
 }
 
 function NavSection({
   section,
-  activeItem,
-  onItemClick,
+  pathname,
   isOpen,
   onToggle,
 }: {
   section: SectionDef
-  activeItem: string
-  onItemClick: (id: string) => void
+  pathname: string
   isOpen: boolean
   onToggle?: () => void
 }) {
@@ -121,8 +112,7 @@ function NavSection({
             <NavItem
               key={item.id}
               item={item}
-              active={activeItem === item.id}
-              onClick={() => onItemClick(item.id)}
+              active={pathname === item.href}
             />
           ))}
         </div>
@@ -152,7 +142,6 @@ function UserAvatar() {
 // ── Sidebar ───────────────────────────────────────────────────────────────────
 
 export function Sidebar() {
-  const [activeItem, setActiveItem] = useState("text-to-speech")
   const [developersOpen, setDevelopersOpen] = useState(true)
   const pathname = usePathname()
 
@@ -173,18 +162,13 @@ export function Sidebar() {
 
       {/* Nav area */}
       <div className="flex flex-col flex-1 gap-[10px] min-h-0 px-3 overflow-y-auto">
-        <NavItem
-          item={HOME_ITEM}
-          active={activeItem === "home"}
-          onClick={() => setActiveItem("home")}
-        />
+        <NavItem item={HOME_ITEM} active={pathname === HOME_ITEM.href} />
 
         {SECTIONS.filter((s) => s.id !== "developers").map((section) => (
           <NavSection
             key={section.id}
             section={section}
-            activeItem={activeItem}
-            onItemClick={setActiveItem}
+            pathname={pathname}
             isOpen={true}
           />
         ))}
@@ -192,8 +176,7 @@ export function Sidebar() {
         <div className="flex flex-col flex-1 min-h-0">
           <NavSection
             section={SECTIONS.find((s) => s.id === "developers")!}
-            activeItem={activeItem}
-            onItemClick={setActiveItem}
+            pathname={pathname}
             isOpen={developersOpen}
             onToggle={() => setDevelopersOpen((v) => !v)}
           />
@@ -202,22 +185,9 @@ export function Sidebar() {
         {/* Footer */}
         <div className="flex flex-col gap-1 pb-4 shrink-0">
           <NavItem
-            item={{ id: "documentation", label: "Documentation", icon: "Document" }}
-            active={activeItem === "documentation"}
-            onClick={() => setActiveItem("documentation")}
+            item={{ id: "documentation", label: "Documentation", icon: "Document", href: "/documentation" }}
+            active={pathname === "/documentation"}
           />
-          <Link
-            href="/design-system"
-            className={[
-              "flex w-full items-center gap-2 px-3 py-2 rounded-[50px] transition-colors",
-              pathname === "/design-system"
-                ? "bg-[var(--color-2)] text-[var(--color-text-primary)]"
-                : "text-[var(--color-text-secondary)] hover:bg-[var(--color-2)]",
-            ].join(" ")}
-          >
-            <PlatformIcon name="Sidebar" className="shrink-0 overflow-clip relative size-4" />
-            <span className="text-body-14 leading-none whitespace-nowrap">Design System</span>
-          </Link>
           <button className="flex items-center w-full rounded-[50px] hover:bg-[var(--color-2)] transition-colors">
             <UserAvatar />
             <span className="text-body-14 text-[var(--color-text-secondary)] whitespace-nowrap">

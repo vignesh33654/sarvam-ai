@@ -20,6 +20,7 @@ interface DropdownProps {
   align?: "left" | "right"
   side?: "top" | "bottom"
   className?: string
+  triggerClassName?: string
 }
 
 export function Dropdown({
@@ -32,6 +33,7 @@ export function Dropdown({
   align = "left",
   side = "bottom",
   className,
+  triggerClassName,
 }: DropdownProps) {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState("")
@@ -191,7 +193,10 @@ export function Dropdown({
         aria-controls={open ? listboxId : undefined}
         onClick={() => (open ? closeAndReturn() : openMenu())}
         onKeyDown={handleTriggerKeyDown}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[var(--color-divider)] bg-white text-body-14 text-[var(--color-text-primary)] hover:bg-[var(--color-1)] transition-colors select-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]"
+        className={[
+          "flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[var(--color-divider)] bg-white text-body-14 text-[var(--color-text-primary)] hover:bg-[var(--color-1)] transition-colors select-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]",
+          triggerClassName ?? "",
+        ].join(" ")}
       >
         <span>{selected?.label ?? placeholder}</span>
         <motion.span

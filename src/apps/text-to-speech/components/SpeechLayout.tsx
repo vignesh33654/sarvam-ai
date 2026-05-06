@@ -1,10 +1,15 @@
 "use client"
 
-import { useState } from "react"
 import { Search } from "@/components/ui/Search"
 import { Dropdown, type DropdownOption } from "@/components/ui/Dropdown"
 import { SpeechCard } from "./SpeechCard"
+import { FavouritesLayout } from "./FavouritesLayout"
+import { HistoryLayout } from "./HistoryLayout"
+import { SettingsLayout } from "./SettingsLayout"
 import type { L2Tab } from "./L2Tabs"
+import { useTTSStore } from "@/stores/useTTSStore"
+import { useState } from "react"
+import { VOICES } from "../voices"
 
 const LANGUAGE_OPTIONS: DropdownOption[] = [
   { label: "Hindi", value: "hi" },
@@ -30,19 +35,6 @@ const CATEGORY_OPTIONS: DropdownOption[] = [
   { label: "Assistance", value: "assistance" },
 ]
 
-const VOICES = [
-  { id: "sindhu",  name: "Sindhu",  subtitle: "Best for IVR support",                    avatarSrc: "/Avatar/Type=1.png", starred: true },
-  { id: "karan",   name: "Karan",   subtitle: "Traditional Hindi style",                  avatarSrc: "/Avatar/Type=3.png", starred: true },
-  { id: "ananya",  name: "Ananya",  subtitle: "Pleasant and soothing voice",              avatarSrc: "/Avatar/Type=4.png", starred: true },
-  { id: "arjun",   name: "Arjun",   subtitle: "Pleasant voice",                           avatarSrc: "/Avatar/Type=5.png", starred: true },
-  { id: "aditi",   name: "Aditi",   subtitle: "Best for Tamil narration style",            avatarSrc: "/Avatar/Type=6.png", starred: false },
-  { id: "priya",   name: "Priya",   subtitle: "Polished voice for enterprises",            avatarSrc: "/Avatar/Type=7.png", starred: false },
-  { id: "isha",    name: "Isha",    subtitle: "Encouraging voice for assistance flows",    avatarSrc: "/Avatar/Type=2.png", starred: false },
-  { id: "rohan",   name: "Rohan",   subtitle: "Assistance voice",                         avatarSrc: "/Avatar/Type=5.png", starred: false },
-  { id: "jackson", name: "Jackson", subtitle: "Formal voice for business communications", avatarSrc: "/Avatar/Type=1.png", starred: false },
-  { id: "neha",    name: "Neha",    subtitle: "Friendly default voice for IVR and support", avatarSrc: "/Avatar/Type=2.png", starred: false },
-  { id: "kavya",   name: "Kavya",   subtitle: "Clear, confident voice for collections",   avatarSrc: "/Avatar/Type=7.png", starred: false },
-]
 
 export function SpeechLayout({ activeTab }: { activeTab: L2Tab }) {
   const [search, setSearch] = useState("")
@@ -50,10 +42,15 @@ export function SpeechLayout({ activeTab }: { activeTab: L2Tab }) {
   const [gender, setGender] = useState("")
   const [category, setCategory] = useState("")
 
-  // Voice selection state (for the currently visible voice list)
-  const [selectedVoice, setSelectedVoice] = useState("sindhu")
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [favourites, setFavourites] = useState<Set<string>>(new Set())
+  const {
+    selectedVoice,
+    isPlaying,
+    generationPhase,
+    favourites,
+    selectVoice,
+    togglePlay,
+    toggleFavourite,
+  } = useTTSStore()
 
   const filtered = VOICES.filter(
     (v) =>
@@ -61,14 +58,7 @@ export function SpeechLayout({ activeTab }: { activeTab: L2Tab }) {
       v.subtitle.toLowerCase().includes(search.toLowerCase())
   )
 
-  function toggleFavourite(id: string) {
-    setFavourites((prev) => {
-      const next = new Set(prev)
-      if (next.has(id)) next.delete(id)
-      else next.add(id)
-      return next
-    })
-  }
+  const isLoading = generationPhase === "loading-speech"
 
   return (
     <div className="flex flex-col flex-1 min-w-0">
@@ -116,36 +106,48 @@ export function SpeechLayout({ activeTab }: { activeTab: L2Tab }) {
 
         {/* Voice list */}
         <div className="flex flex-col overflow-y-auto flex-1">
-          {filtered.map((voice) => (
-            <SpeechCard
-              key={voice.id}
-              name={voice.name}
-              subtitle={voice.subtitle}
-              avatarSrc={voice.avatarSrc}
-              starred={voice.starred}
-              selected={selectedVoice === voice.id}
-              isPlaying={selectedVoice === voice.id && isPlaying}
-              favourited={favourites.has(voice.id)}
-              onSelect={() => {
-                if (selectedVoice === voice.id) {
-                  setIsPlaying((prev) => !prev)
-                } else {
-                  setSelectedVoice(voice.id)
-                  setIsPlaying(true)
-                }
-              }}
-              onFavourite={() => toggleFavourite(voice.id)}
-            />
-          ))}
+          {isLoading ? (
+            <div className="flex flex-col px-4 py-2 gap-5 animate-pulse">
+              {Array.from({ length: 10 }).map((_, idx) => (
+                <div key={idx} className="flex items-center gap-3">
+                  <div className="size-12 rounded-full bg-[var(--color-2)]/70 shrink-0" />
+                  <div className="flex flex-col gap-2 flex-1">
+                    <div className="h-3 rounded-full bg-[var(--color-2)]/70 w-[32%]" />
+                    <div className="h-3 rounded-full bg-[var(--color-2)]/70 w-[72%]" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            filtered.map((voice) => (
+              <SpeechCard
+                key={voice.id}
+                name={voice.name}
+                subtitle={voice.subtitle}
+                avatarSrc={voice.avatarSrc}
+                starred={voice.starred}
+                selected={selectedVoice?.id === voice.id}
+                isPlaying={selectedVoice?.id === voice.id && isPlaying}
+                favourited={favourites.has(voice.id)}
+                onSelect={() => {
+                  if (selectedVoice?.id === voice.id) {
+                    togglePlay()
+                  } else {
+                    selectVoice(voice)
+                  }
+                }}
+                onFavourite={() => toggleFavourite(voice.id)}
+              />
+            ))
+          )}
         </div>
       </div>
 
-      {/* Future: favourites/history/settings content */}
-      {activeTab !== "voice" && (
-        <div className="flex flex-col flex-1 min-w-0 items-center justify-center text-body-14 text-[var(--color-text-tertiary)]">
-          Coming soon
-        </div>
-      )}
+      {activeTab === "favourites" && <FavouritesLayout />}
+
+      {activeTab === "history" && <HistoryLayout />}
+
+      {activeTab === "settings" && <SettingsLayout />}
     </div>
   )
 }
