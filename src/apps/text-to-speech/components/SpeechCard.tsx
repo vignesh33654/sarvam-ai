@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { StarIcon, FavouriteIcon } from "@hugeicons/core-free-icons"
+import { FavouriteIcon } from "@hugeicons/core-free-icons"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 const DEFAULT_AVATAR = "/Avatar/Type=1.png"
@@ -79,10 +79,10 @@ export function SpeechCard({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="absolute -top-[3px] left-[30px] size-[18px] flex items-center justify-center">
-                    <HugeiconsIcon icon={StarIcon} size={14} color="#F5A623" fill="#F5A623" />
+                    <img src="/Star 1.svg" alt="" aria-hidden className="size-4" />
                   </div>
                 </TooltipTrigger>
-                <TooltipContent side="top">recommended for this language</TooltipContent>
+                <TooltipContent side="top">Recommended for this language</TooltipContent>
               </Tooltip>
             )}
           </div>

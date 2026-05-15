@@ -31,8 +31,8 @@ export function L2Sidebar({
                 className={[
                   "size-9 rounded-full flex items-center justify-center transition-colors",
                   activeTab === tab.id
-                    ? "bg-[var(--color-2)] text-[var(--color-text-primary)]"
-                    : "text-[var(--color-text-secondary)] hover:bg-[var(--color-2)]",
+                    ? "bg-[#e8e8e8] text-[var(--color-text-primary)] border border-[#d4d4d4]"
+                    : "text-[var(--color-text-secondary)] hover:bg-[var(--color-2)] border border-transparent",
                 ].join(" ")}
                 aria-label={tab.label}
                 aria-pressed={activeTab === tab.id}

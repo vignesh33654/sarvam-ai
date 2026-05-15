@@ -7,7 +7,6 @@ import {
   ThumbsDownIcon,
   FavouriteIcon,
   Download01Icon,
-  StarIcon,
 } from "@hugeicons/core-free-icons"
 import { useTTSStore } from "@/stores/useTTSStore"
 import {
@@ -66,7 +65,6 @@ export function MusicPlayer() {
     favourites,
     feedback,
     togglePlay,
-    setIsPlaying,
     setCurrentTime,
     toggleFavourite,
     setFeedback,
@@ -147,7 +145,7 @@ export function MusicPlayer() {
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <div className="absolute -top-[3px] left-[30px] size-[18px] flex items-center justify-center cursor-default">
-                          <HugeiconsIcon icon={StarIcon} size={14} color="#F5A623" fill="#F5A623" />
+                          <img src="/Star 1.svg" alt="" aria-hidden className="size-[13px]" />
                         </div>
                       </TooltipTrigger>
                       <TooltipContent side="top">Recommended for this language</TooltipContent>
@@ -161,7 +159,7 @@ export function MusicPlayer() {
         </TooltipProvider>
 
         <div className="flex flex-col gap-1 min-w-0">
-          <p className="text-body-14 text-[var(--color-text-primary)] truncate">{activeVoice.name}</p>
+          <p className="text-body-14 text-[var(--color-text-primary)]">{activeVoice.name}</p>
           <p className="text-body-14 text-[var(--color-text-secondary)] truncate">{activeVoice.subtitle}</p>
         </div>
       </div>
@@ -211,20 +209,7 @@ export function MusicPlayer() {
       <div className="flex items-center gap-[9px] justify-end w-[240px] shrink-0">
         <div className="flex items-center gap-1.5">
           <IconBtn
-            label="Not helpful"
-            onClick={() => handleFeedback("down")}
-            active={voiceFeedback === "down"}
-          >
-            <HugeiconsIcon
-              icon={ThumbsDownIcon}
-              size={20}
-              color="currentColor"
-              fill={voiceFeedback === "down" ? "currentColor" : "none"}
-            />
-          </IconBtn>
-
-          <IconBtn
-            label="Helpful"
+            label="Like"
             onClick={() => handleFeedback("up")}
             active={voiceFeedback === "up"}
           >
@@ -233,6 +218,19 @@ export function MusicPlayer() {
               size={20}
               color="currentColor"
               fill={voiceFeedback === "up" ? "currentColor" : "none"}
+            />
+          </IconBtn>
+
+          <IconBtn
+            label="Dislike"
+            onClick={() => handleFeedback("down")}
+            active={voiceFeedback === "down"}
+          >
+            <HugeiconsIcon
+              icon={ThumbsDownIcon}
+              size={20}
+              color="currentColor"
+              fill={voiceFeedback === "down" ? "currentColor" : "none"}
             />
           </IconBtn>
         </div>
@@ -246,7 +244,7 @@ export function MusicPlayer() {
               <button
                 onClick={cycleSpeed}
                 aria-label="Playback speed"
-                className="h-8 px-2.5 rounded-full text-[12px] font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-2)] transition-colors tabular-nums"
+                className="h-8 w-12 rounded-full text-[12px] font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-2)] transition-colors tabular-nums"
               >
                 {speed === 1.0 ? "1x" : `${speed}x`}
               </button>

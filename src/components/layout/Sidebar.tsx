@@ -68,12 +68,12 @@ function NavItem({ item, active }: { item: NavItemDef; active: boolean }) {
       className={[
         "flex w-full items-center gap-2 px-3 py-2 rounded-[50px] transition-colors",
         active
-          ? "bg-[var(--color-2)] text-[var(--color-text-primary)]"
+          ? "bg-[#e8e8e8] text-[var(--color-text-primary)]"
           : "text-[var(--color-text-secondary)] hover:bg-[var(--color-2)]",
       ].join(" ")}
     >
       <PlatformIcon name={item.icon} className="shrink-0 overflow-clip relative size-4" />
-      <span className="text-body-14 leading-none whitespace-nowrap">{item.label}</span>
+      <span className={`text-body-14 leading-none whitespace-nowrap${active ? " font-medium" : ""}`}>{item.label}</span>
     </Link>
   )
 }
@@ -162,7 +162,13 @@ export function Sidebar() {
 
       {/* Nav area */}
       <div className="flex flex-col flex-1 gap-[10px] min-h-0 px-3 overflow-y-auto">
-        <NavItem item={HOME_ITEM} active={pathname === HOME_ITEM.href} />
+        <NavItem
+          item={HOME_ITEM}
+          active={
+            pathname === HOME_ITEM.href &&
+            !SECTIONS.flatMap((s) => s.items).some((i) => i.href === pathname)
+          }
+        />
 
         {SECTIONS.filter((s) => s.id !== "developers").map((section) => (
           <NavSection

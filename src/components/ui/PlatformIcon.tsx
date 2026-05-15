@@ -10,7 +10,8 @@ import {
   Key01Icon,
   Invoice01Icon,
   Tag01Icon,
-  ArrowUp01Icon,
+  LayoutLeftIcon,
+  ArrowDown01Icon,
   AudioWave01Icon,
   File01Icon,
   Analytics01Icon,
@@ -19,8 +20,8 @@ import {
 
 const ICON_MAP: Record<string, IconSvgElement> = {
   Home:        Home01Icon,
-  Sidebar:     ArrowUp01Icon,
-  Sarvam:      ArrowUp01Icon,
+  Sidebar:     LayoutLeftIcon,
+  Sarvam:      ArrowDown01Icon,
   Video:       Tv01Icon,
   Audio:       AudioWave01Icon,
   Document:    File01Icon,
